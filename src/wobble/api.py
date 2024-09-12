@@ -24,7 +24,9 @@ def wobble():
 @click.option('--frames', default=24, help='Number of frames for the animation')
 @click.option('--resolution', default=512, help='Resolution of the output image')
 @click.option('--samples', default=10, help='Number of Cycles samples')
-def create_protein_animation(pdb_code, output_path, frames, resolution, samples):
+@click.option('--export-blend/--no-export-blend', is_flag=True, default=True, help='Export the Blender file')
+@click.option('--render/--no-render', is_flag=True, default=True, help='Export the Blender file')
+def create_protein_animation(pdb_code, output_path, frames, resolution, samples, export_blend, render):
     """
     Create a protein animation from a PDB code and save it to the specified output path.
     """
@@ -46,35 +48,37 @@ def create_protein_animation(pdb_code, output_path, frames, resolution, samples)
     # note this is hacky.....
     bpy.ops.node.wiggleprot()
 
+    if export_blend:
+        # export the blendfile
+        print("Exporting the Blend File")
+        export_blend_file(output_path, filename='protein_animation.blend')
 
-    # export the blendfile
-    export_blend_file(output_path, filename='protein_animation.blend')
+    if render:
+        # Set render settings
+        bpy.context.scene.render.engine = "CYCLES"
+        bpy.context.scene.render.film_transparent = True
 
-    # Set render settings
-    bpy.context.scene.render.engine = "CYCLES"
-    bpy.context.scene.render.film_transparent = True
+        # Set up compositor
+        comp = bsyn.Compositor()
+        bsyn.render.set_cycles_samples(samples)
+        bsyn.render.set_resolution(resolution, resolution)
 
-    # Set up compositor
-    comp = bsyn.Compositor()
-    bsyn.render.set_cycles_samples(samples)
-    bsyn.render.set_resolution(resolution, resolution)
+        # Define output
+        comp.define_output("Image", directory=output_path, file_name="test")
 
-    # Define output
-    comp.define_output("Image", directory=output_path, file_name="test")
+        # Render animation
+        comp.render(animation=True, frame_end=frames)
 
-    # Render animation
-    comp.render(animation=True, frame_end=frames)
+        # Convert frames to video
+        bsyn.file.frames_to_video(
+            directory=output_path,
+            output_loc=f"{output_path}/{pdb_code}_animation.gif",
+            frame_rate=24,
+            delete_images=False,
+            output_fmt="gif",
+        )
 
-    # Convert frames to video
-    bsyn.file.frames_to_video(
-        directory=output_path,
-        output_loc=f"{output_path}/{pdb_code}_animation.gif",
-        frame_rate=24,
-        delete_images=False,
-        output_fmt="gif",
-    )
-
-    click.echo(f"Animation created and saved to {output_path}/{pdb_code}_animation.gif")
+        click.echo(f"Animation created and saved to {output_path}/{pdb_code}_animation.gif")
 
 def load_pdb(code):
     bpy.context.scene.MN_pdb_code = code
@@ -126,7 +130,3 @@ def export_blend_file(output_path, filename='protein_animation.blend'):
     bpy.ops.wm.save_as_mainfile(filepath=file_path)
 
     print(f"Blend file exported to: {file_path}")
-
-
-if __name__ == '__main__':
-    create_protein_animation()
