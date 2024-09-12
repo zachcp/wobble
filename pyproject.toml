@@ -37,7 +37,7 @@ molecularnodes = { git = "https://github.com/BradyAJohnston/MolecularNodes.git" 
 [tool.pixi.tasks]
 help = "wobble --help"
 example = "wobble  create-protein-animation 1FAP testout --no-render"
-example2 = "wobble  create-protein-animation 1FAP testout"
+example2 = "wobble glowing-ligand 1FAP testout --no-render"
 launch = "/Applications/Blender.app/Contents/MacOS/Blender --python-use-system-env "
 
 [tool.pixi.dependencies]

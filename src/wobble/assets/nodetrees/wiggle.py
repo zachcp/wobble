@@ -7,7 +7,7 @@ import bpy
 
 class wiggle(bpy.types.Operator):
     bl_idname = "node.wiggleprot"
-    bl_label = "wiggleprot"
+    bl_label = "Wiggle Protein"
     bl_options = {"REGISTER", "UNDO"}
 
     def execute(self, context):
