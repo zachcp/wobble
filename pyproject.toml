@@ -13,7 +13,7 @@ requires-python = "==3.11"
 version = "0.1.0"
 
 [project.scripts]
-protein-animation = "wobble.api:create_protein_animation"
+wobble = "wobble.api:create_protein_animation"
 
 
 [build-system]
@@ -28,14 +28,15 @@ packages = ["src/wobble"]
 channels = ["conda-forge"]
 platforms = ["osx-arm64"]
 
+
 [tool.pixi.pypi-dependencies]
 wobble = { path = ".", editable = true }
 molecularnodes = { git = "https://github.com/BradyAJohnston/MolecularNodes.git" }
 
+
 [tool.pixi.tasks]
-help = "python wobble/api.py --help"
-wobble = "python wobble/api.py"
-example = "python wobble/api.py 1FAP ."
+help = "wobble --help"
+example = "wobble 1FAP ."
 launch = "/Applications/Blender.app/Contents/MacOS/Blender --python-use-system-env "
 entry = "python -c \"from wobble.api import create_protein_animation; create_protein_animation()\""
 

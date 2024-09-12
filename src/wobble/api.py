@@ -10,7 +10,7 @@ try:
 except:
     pass
 
-from . import wiggle
+from .assets.nodetrees import wiggle
 wiggle.register()
 
 

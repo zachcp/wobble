@@ -1,3 +1,8 @@
+#
+# This NodeGroup will use the Animation Node to move based on the B-Factor.
+#
+#
+#
 import bpy
 
 class wiggle(bpy.types.Operator):
