@@ -13,8 +13,12 @@ except:
 from .assets.nodetrees import wiggle
 wiggle.register()
 
+@click.group()
+def wobble():
+    """Main command group for protein wobble animations."""
+    pass
 
-@click.command()
+@wobble.command()
 @click.argument('pdb_code', type=str)
 @click.argument('output_path', type=click.Path())
 @click.option('--frames', default=24, help='Number of frames for the animation')
