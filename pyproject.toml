@@ -3,9 +3,9 @@ authors = [
     { name = "Zachary Charlop-Powers", email = "zach.charlop.powers@gmail.com" },
 ]
 dependencies = [
-    "bpy>=4.2.0,<5",
+    "bpy==4.2.0",
     "blendersynth>=0.2.5,<0.3",
-    "platformdirs>=4.2.2,<5",
+    "platformdirs>=4.3.2,<5",
 ]
 description = "Add a short description here"
 name = "wobble"
@@ -33,15 +33,14 @@ wobble = { path = ".", editable = true }
 molecularnodes = { git = "https://github.com/BradyAJohnston/MolecularNodes.git" }
 
 [tool.pixi.tasks]
-build = "hatch build"
-install = "pip install ."
 help = "python wobble/api.py --help"
 wobble = "python wobble/api.py"
 example = "python wobble/api.py 1FAP ."
 launch = "/Applications/Blender.app/Contents/MacOS/Blender --python-use-system-env "
-install-editable = "pip install -e ."
+entry = "python -c \"from wobble.api import create_protein_animation; create_protein_animation()\""
 
 [tool.pixi.dependencies]
+python = "==3.11"
 numpy = "<2.0"
 ffmpeg-python = "*"
 opencv = "*"

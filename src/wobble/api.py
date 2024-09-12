@@ -1,3 +1,4 @@
+import os
 import click
 import bpy
 import mathutils
@@ -9,7 +10,7 @@ try:
 except:
     pass
 
-import wiggle
+from . import wiggle
 wiggle.register()
 
 
@@ -40,6 +41,10 @@ def create_protein_animation(pdb_code, output_path, frames, resolution, samples)
 
     # note this is hacky.....
     bpy.ops.node.wiggleprot()
+
+
+    # export the blendfile
+    export_blend_file(output_path, filename='protein_animation.blend')
 
     # Set render settings
     bpy.context.scene.render.engine = "CYCLES"
@@ -97,6 +102,27 @@ def increase_lighting():
     for obj in bpy.data.objects:
         if obj.type == "LIGHT":
             obj.data.energy *= 1.5
+
+def export_blend_file(output_path, filename='protein_animation.blend'):
+    """
+    Export the current Blender scene as a .blend file.
+
+    Args:
+    output_path (str): The directory path where the .blend file will be saved.
+    filename (str): The name of the .blend file (default: 'protein_animation.blend').
+    """
+
+    # Ensure the output directory exists
+    os.makedirs(output_path, exist_ok=True)
+
+    # Construct the full file path
+    file_path = os.path.join(output_path, filename)
+
+    # Save the current Blender scene
+    bpy.ops.wm.save_as_mainfile(filepath=file_path)
+
+    print(f"Blend file exported to: {file_path}")
+
 
 if __name__ == '__main__':
     create_protein_animation()
