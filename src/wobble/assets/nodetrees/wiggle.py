@@ -1,20 +1,13 @@
-bl_info = {
-    "name": "WiggleProt",
-    "author": "Node To Python",
-    "version": (1, 0, 0),
-    "blender": (4, 2, 1),
-    "location": "Node",
-    "category": "Node",
-}
-
+#
+# This NodeGroup will use the Animation Node to move based on the B-Factor.
+#
+#
+#
 import bpy
-import mathutils
-import os
-
 
 class wiggle(bpy.types.Operator):
     bl_idname = "node.wiggleprot"
-    bl_label = "wiggleprot"
+    bl_label = "Wiggle Protein"
     bl_options = {"REGISTER", "UNDO"}
 
     def execute(self, context):
@@ -101,8 +94,6 @@ class wiggle(bpy.types.Operator):
             set_color.links.new(group_input.outputs[2], store_named_attribute.inputs[3])
             return set_color
 
-        set_color = set_color_node_group()
-
         # initialize _mn_world_scale node group
         def _mn_world_scale_node_group():
             _mn_world_scale = bpy.data.node_groups.new(
@@ -148,8 +139,6 @@ class wiggle(bpy.types.Operator):
             # value.Value -> group_output_1.world_scale
             _mn_world_scale.links.new(value.outputs[0], group_output_1.inputs[0])
             return _mn_world_scale
-
-        _mn_world_scale = _mn_world_scale_node_group()
 
         # initialize mn_units node group
         def mn_units_node_group():
@@ -242,8 +231,6 @@ class wiggle(bpy.types.Operator):
             # math_001.Value -> group_output_2.Nanometre
             mn_units.links.new(math_001.outputs[0], group_output_2.inputs[1])
             return mn_units
-
-        mn_units = mn_units_node_group()
 
         # initialize _mn_utils_style_sticks node group
         def _mn_utils_style_sticks_node_group():
@@ -840,8 +827,6 @@ class wiggle(bpy.types.Operator):
                 edge_vertices.outputs[0], capture_attribute_003.inputs[1]
             )
             return _mn_utils_style_sticks
-
-        _mn_utils_style_sticks = _mn_utils_style_sticks_node_group()
 
         # initialize topology_find_bonds node group
         def topology_find_bonds_node_group():
@@ -2048,8 +2033,6 @@ class wiggle(bpy.types.Operator):
             )
             return topology_find_bonds
 
-        topology_find_bonds = topology_find_bonds_node_group()
-
         # initialize _mn_utils_style_spheres_points node group
         def _mn_utils_style_spheres_points_node_group():
             _mn_utils_style_spheres_points = bpy.data.node_groups.new(
@@ -2214,8 +2197,6 @@ class wiggle(bpy.types.Operator):
                 group_2.outputs[0], switch_2.inputs[1]
             )
             return _mn_utils_style_spheres_points
-
-        _mn_utils_style_spheres_points = _mn_utils_style_spheres_points_node_group()
 
         # initialize _mn_utils_style_spheres_icosphere node group
         def _mn_utils_style_spheres_icosphere_node_group():
@@ -2690,10 +2671,6 @@ class wiggle(bpy.types.Operator):
             )
             return _mn_utils_style_spheres_icosphere
 
-        _mn_utils_style_spheres_icosphere = (
-            _mn_utils_style_spheres_icosphere_node_group()
-        )
-
         # initialize style_spheres node group
         def style_spheres_node_group():
             style_spheres = bpy.data.node_groups.new(
@@ -2891,8 +2868,6 @@ class wiggle(bpy.types.Operator):
             # group_014.Point Cloud -> join_geometry.Geometry
             style_spheres.links.new(group_014.outputs[0], join_geometry.inputs[0])
             return style_spheres
-
-        style_spheres = style_spheres_node_group()
 
         # initialize style_ball_and_stick node group
         def style_ball_and_stick_node_group():
@@ -3232,8 +3207,6 @@ class wiggle(bpy.types.Operator):
             )
             return style_ball_and_stick
 
-        style_ball_and_stick = style_ball_and_stick_node_group()
-
         # initialize animate_value node group
         def animate_value_node_group():
             animate_value = bpy.data.node_groups.new(
@@ -3437,8 +3410,6 @@ class wiggle(bpy.types.Operator):
             animate_value.links.new(switch_002.outputs[0], group_output_9.inputs[0])
             return animate_value
 
-        animate_value = animate_value_node_group()
-
         # initialize _mn_animate_wiggle_mask_length node group
         def _mn_animate_wiggle_mask_length_node_group():
             _mn_animate_wiggle_mask_length = bpy.data.node_groups.new(
@@ -3519,8 +3490,6 @@ class wiggle(bpy.types.Operator):
                 index_switch.outputs[0], group_output_10.inputs[0]
             )
             return _mn_animate_wiggle_mask_length
-
-        _mn_animate_wiggle_mask_length = _mn_animate_wiggle_mask_length_node_group()
 
         # initialize mn_animate_noise_repeat node group
         def mn_animate_noise_repeat_node_group():
@@ -3965,8 +3934,6 @@ class wiggle(bpy.types.Operator):
             mn_animate_noise_repeat.links.new(clamp.outputs[0], noise_texture.inputs[4])
             return mn_animate_noise_repeat
 
-        mn_animate_noise_repeat = mn_animate_noise_repeat_node_group()
-
         # initialize _utils_group_field_at_selection node group
         def _utils_group_field_at_selection_node_group():
             _utils_group_field_at_selection = bpy.data.node_groups.new(
@@ -4260,8 +4227,6 @@ class wiggle(bpy.types.Operator):
                 field_at_index_004.outputs[0], group_output_12.inputs[5]
             )
             return _utils_group_field_at_selection
-
-        _utils_group_field_at_selection = _utils_group_field_at_selection_node_group()
 
         # initialize _mn_utils_aa_atom_pos node group
         def _mn_utils_aa_atom_pos_node_group():
@@ -4644,8 +4609,6 @@ class wiggle(bpy.types.Operator):
             )
             return _mn_utils_aa_atom_pos
 
-        _mn_utils_aa_atom_pos = _mn_utils_aa_atom_pos_node_group()
-
         # initialize _mn_constants_atom_name_peptide node group
         def _mn_constants_atom_name_peptide_node_group():
             _mn_constants_atom_name_peptide = bpy.data.node_groups.new(
@@ -4796,8 +4759,6 @@ class wiggle(bpy.types.Operator):
                 integer_004.outputs[0], group_output_14.inputs[4]
             )
             return _mn_constants_atom_name_peptide
-
-        _mn_constants_atom_name_peptide = _mn_constants_atom_name_peptide_node_group()
 
         # initialize _mn_select_peptide node group
         def _mn_select_peptide_node_group():
@@ -5034,8 +4995,6 @@ class wiggle(bpy.types.Operator):
             )
             return _mn_select_peptide
 
-        _mn_select_peptide = _mn_select_peptide_node_group()
-
         # initialize fallback_boolean node group
         def fallback_boolean_node_group():
             fallback_boolean = bpy.data.node_groups.new(
@@ -5106,8 +5065,6 @@ class wiggle(bpy.types.Operator):
                 group_input_16.outputs[0], named_attribute_5.inputs[0]
             )
             return fallback_boolean
-
-        fallback_boolean = fallback_boolean_node_group()
 
         # initialize is_peptide node group
         def is_peptide_node_group():
@@ -5220,8 +5177,6 @@ class wiggle(bpy.types.Operator):
             # boolean_math_1.Boolean -> group_output_17.Inverted
             is_peptide.links.new(boolean_math_1.outputs[0], group_output_17.inputs[1])
             return is_peptide
-
-        is_peptide = is_peptide_node_group()
 
         # initialize _mn_utils_rotate_res node group
         def _mn_utils_rotate_res_node_group():
@@ -5819,8 +5774,6 @@ class wiggle(bpy.types.Operator):
             )
             return _mn_utils_rotate_res
 
-        _mn_utils_rotate_res = _mn_utils_rotate_res_node_group()
-
         # initialize _mn_select_res_name_peptide node group
         def _mn_select_res_name_peptide_node_group():
             _mn_select_res_name_peptide = bpy.data.node_groups.new(
@@ -6153,8 +6106,6 @@ class wiggle(bpy.types.Operator):
             )
             return _mn_select_res_name_peptide
 
-        _mn_select_res_name_peptide = _mn_select_res_name_peptide_node_group()
-
         # initialize _mn_animate_wiggle_mask_res node group
         def _mn_animate_wiggle_mask_res_node_group():
             _mn_animate_wiggle_mask_res = bpy.data.node_groups.new(
@@ -6470,8 +6421,6 @@ class wiggle(bpy.types.Operator):
             )
             return _mn_animate_wiggle_mask_res
 
-        _mn_animate_wiggle_mask_res = _mn_animate_wiggle_mask_res_node_group()
-
         # initialize animate_wiggle node group
         def animate_wiggle_node_group():
             animate_wiggle = bpy.data.node_groups.new(
@@ -6749,8 +6698,6 @@ class wiggle(bpy.types.Operator):
             animate_wiggle.links.new(group_input_21.outputs[1], reroute_001_3.inputs[0])
             return animate_wiggle
 
-        animate_wiggle = animate_wiggle_node_group()
-
         # initialize nodegroup_003 node group
         def nodegroup_003_node_group():
             nodegroup_003 = bpy.data.node_groups.new(
@@ -6905,8 +6852,33 @@ class wiggle(bpy.types.Operator):
             )
             return nodegroup_003
 
-        nodegroup_003 = nodegroup_003_node_group()
+        # Setup and Connet All of the Nodes
 
+        set_color = set_color_node_group()
+        _mn_world_scale = _mn_world_scale_node_group()
+        mn_units = mn_units_node_group()
+        _mn_utils_style_sticks = _mn_utils_style_sticks_node_group()
+        topology_find_bonds = topology_find_bonds_node_group()
+        _mn_utils_style_spheres_points = _mn_utils_style_spheres_points_node_group()
+        _mn_utils_style_spheres_icosphere = (
+            _mn_utils_style_spheres_icosphere_node_group()
+        )
+        style_spheres = style_spheres_node_group()
+        style_ball_and_stick = style_ball_and_stick_node_group()
+        animate_value = animate_value_node_group()
+        _mn_animate_wiggle_mask_length = _mn_animate_wiggle_mask_length_node_group()
+        mn_animate_noise_repeat = mn_animate_noise_repeat_node_group()
+        _utils_group_field_at_selection = _utils_group_field_at_selection_node_group()
+        _mn_utils_aa_atom_pos = _mn_utils_aa_atom_pos_node_group()
+        _mn_constants_atom_name_peptide = _mn_constants_atom_name_peptide_node_group()
+        _mn_select_peptide = _mn_select_peptide_node_group()
+        fallback_boolean = fallback_boolean_node_group()
+        is_peptide = is_peptide_node_group()
+        _mn_utils_rotate_res = _mn_utils_rotate_res_node_group()
+        _mn_select_res_name_peptide = _mn_select_res_name_peptide_node_group()
+        _mn_animate_wiggle_mask_res = _mn_animate_wiggle_mask_res_node_group()
+        animate_wiggle = animate_wiggle_node_group()
+        nodegroup_003 = nodegroup_003_node_group()
         name = bpy.context.object.name
         obj = bpy.data.objects[name]
         mod = obj.modifiers.new(name="UserNode", type="NODES")
