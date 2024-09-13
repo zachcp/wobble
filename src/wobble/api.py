@@ -3,9 +3,10 @@ import click
 import bpy
 import mathutils
 import molecularnodes
-import blendersynth as bsyn
+
 
 try:
+    import blendersynth as bsyn
     molecularnodes.register()
 except:
     pass
@@ -153,16 +154,13 @@ def create_protein_animation(pdb_code, output_path, frames, resolution, samples,
 @click.option('--render/--no-render', is_flag=True, default=True, help='Export the Blender file')
 def glowing_ligand(pdb_code, output_path, frames, resolution, samples, export_blend, render):
     """
-    Create an iamge of a glowing ligand.
+    Create an image of a glowing ligand.
     """
     # Load PDB
     load_pdb(pdb_code)
 
     # Set camera
     set_camera(1.2)
-
-    # Increase lighting
-    increase_lighting()
 
     # Remove MolecularNodes modifier and add WiggleProt
     obj = bpy.data.objects[pdb_code]
@@ -173,11 +171,10 @@ def glowing_ligand(pdb_code, output_path, frames, resolution, samples, export_bl
     # note this is hacky.....
     bpy.ops.node.ligandglow()
 
-
     if export_blend:
         # export the blendfile
         print("Exporting the Blend File")
-        export_blend_file(output_path, filename='protein_animation.blend')
+        export_blend_file(output_path, filename='ligand_glow.blend')
 
     if render:
         # Set render settings

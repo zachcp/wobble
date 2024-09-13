@@ -7,21 +7,21 @@ Takes a PDB file and an output location and returns a GIF of the protein animate
 ```sh
 pixi run help
 
-# ✨ Pixi task (help): python wobble/api.py --help
-# Usage: api.py [OPTIONS] PDB_CODE OUTPUT_PATH
+# (base) zcpowers@Zacharys-MacBook-Air wobble % pixi run help
+# ✨ Pixi task (help): wobble --help
+# Usage: wobble [OPTIONS] COMMAND [ARGS]...
 #
-#  Create a protein animation from a PDB code and save it to the specified
-#  output path.
+#   Main command group for protein wobble animations.
 #
 # Options:
-#  --frames INTEGER      Number of frames for the animation
-#  --resolution INTEGER  Resolution of the output image
-#  --samples INTEGER     Number of Cycles samples
-#  --help                Show this message and exit.
-
+#   --help  Show this message and exit.
+#
+# Commands:
+#   create-protein-animation  Create a protein animation from a PDB code...
+#   glowing-ligand            Create an image of a glowing ligand.
 
 pixi run example  # this makes the example in this directory ...
-pixi run wobble
+pixi run wobble   # entrypoint to click handler
 ```
 
 ## Result
